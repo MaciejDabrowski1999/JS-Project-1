@@ -1,0 +1,30 @@
+html {
+    scroll-behavior: smooth;
+}
+.main-section {
+    width: 80vw;
+}
+#logo div {
+    width: 100vw;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+.logo {
+    /* background-image: url(Logo/Logo.png); */
+    width: 40%;
+    height: 40%;   
+}
+.main_box {
+    display: flex;
+    justify-content: center;
+    
+    width: 100vw;
+}
+section h1 {
+    text-align: center;
+}
+.elements {
+    display: flex;
+    flex-direction: column;
+}
