@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html lang="pl">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="style.css" rel="stylesheet" />
-        <title>Przychody i wydatki</title>
-    </head>
-    <body>
-        <section id="logo">
-            <div ><img src="Logo/Logo.png" alt="logo" class="logo"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="style.css" rel="stylesheet" />
+    <title>Przychody i wydatki</title>
+  </head>
+  <body>
+    <div class="container">
+      <section id="logo">
+        <div><img src="Logo/Logo.png" alt="logo" class="logo" /></div>
+      </section>
+      <nav>
+        <div id="message"></div>
+      </nav>
+      <div class="main_box">
+        <section id="income">
+          <h1>Przychody</h1>
+          <input
+            type="text"
+            name="input-income"
+            placeholder="Nazwa przychodu"
+          />
+          <input type="number" name="input-value" placeholder="Kwota" />
+          <input type="submit" class="add" value="Dodaj" />
+          <div class="elements"></div>
+          <div class="sum_all"></div>
         </section>
-        <nav>
-            <div id="message"></div>
-        </nav>
-        <div class="main_box">
-            <section id="income">
-                <h1>Przychody</h1>              
-                <input type="text" name="input-name" placeholder="Nazwa przychodu">
-                <input type="number" name="input-value" placeholder="Kwota">
-                <input type="submit" class="add" value="Dodaj">        
-                <div class="elements">
-
-                </div>
-                <div class="sum_all"></div>
-            </section>
-            <section id="costs">
-                <!-- <h1>Koszty</h1>
-                <input type="text" name="input-name" placeholder="Nazwa wydatku">
-                <input type="number" name="input-value" placeholder="Kwota">
-                <input type="submit" class="add" value="Dodaj">
-                <div class="elements">
-    
-                </div>
-                <div class="sum_all"></div> -->
-            </section>
-        </div>
-        <script src="index.js"></script>
-    </body>
+        <section id="costs">
+          <h1>Koszty</h1>
+          <input type="text" name="input-name" placeholder="Nazwa wydatku" />
+          <input type="number" name="input-value" placeholder="Kwota" />
+          <input type="submit" class="add" value="Dodaj" />
+          <div class="elements"></div>
+          <div class="sum_all"></div>
+        </section>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
 </html>
