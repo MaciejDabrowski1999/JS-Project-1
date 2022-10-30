@@ -20,13 +20,20 @@
           <h1>Przychody</h1>
           <input
             type="text"
-            name="input-income"
+            name="incomeName"
             placeholder="Nazwa przychodu"
+            class="incomeName input-name"
           />
-          <input type="number" name="input-value" placeholder="Kwota" />
-          <input type="submit" class="add" value="Dodaj" />
+          <input
+            type="number"
+            name="incomeValue"
+            placeholder="Kwota"
+            class="incomeValue input-value"
+          />
+          <input type="submit" class="incomeAddButton add" value="Dodaj" />
           <div class="elements"></div>
-          <div class="sum_all"></div>
+          <ul class="listItem incomeList"></ul>
+          <div class="sumAll"></div>
         </section>
         <section id="costs">
           <h1>Koszty</h1>

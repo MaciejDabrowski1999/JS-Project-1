@@ -1,55 +1,77 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const inp = document.querySelector('.input-income')
-    console.log(inp.value);
-})
-;
+const incomeUl = document.querySelector(".incomeList");
+const incomeValueInput = document.querySelector(".incomeValue");
+const incomeNameInput = document.querySelector(".incomeName");
+const incomeAddButton = document.querySelector(".incomeAddButton");
 
+//zmienneincome
+let incomeID = 1;
+let listIncomeID = 1;
+let incomeTable = [];
+let bntIncomeEditId = 1;
+let listIncomeTable = [];
 
-function rmaddbnt() {
-    function createEL(){
-        let textarea = document.createElement('ul');
-        // textarea.innerHTML = intext;
-        let bntadd=document.createElement('button');
-        bntadd.innerHTML = 'Edytuj';
-        let bntrm = document.createElement('button');
-        bntrm.innerHTML = 'Usuń';
-        let bodyadd = document.querySelector('#income .elements');
-        let list = document.createElement('li');
-        let box = document.createElement('div');
-        box.style.display = 'flex';
-        bodyadd.appendChild(box);
-        box.appendChild(textarea)
-        box.appendChild(bntadd);
-        box.appendChild(bntrm);
-        textarea.appendChild(list);
-    }
-    createEL()
+function addList() {
+  const listIncome = document.createElement("li");
+  const divInputName = document.createElement("div");
+  const divInputValue = document.createElement("div");
+  const buttonIncomeEdit = document.createElement("button");
+  const buttonIncomeRemove = document.createElement("button");
+
+  buttonIncomeRemove.innerHTML = "Usuń";
+  buttonIncomeEdit.innerHTML = "Edytuj";
+
+  buttonIncomeRemove.setAttribute("class", "incomeRemove");
+
+  listIncome.setAttribute("display", "flex");
+  divInputName.setAttribute("contenteditable", false);
+  divInputValue.setAttribute("contenteditable", false);
+  divInputName.setAttribute("class", "listDiv");
+  divInputValue.setAttribute("class", "listDiv");
+  incomeUl.appendChild(listIncome);
+  listIncome.appendChild(divInputName);
+  listIncome.appendChild(divInputValue);
+  listIncome.appendChild(buttonIncomeEdit);
+  listIncome.appendChild(buttonIncomeRemove);
+}
+// Class for Income
+class IncomeList {
+  constructor(incomeID, incomeNameInput, incomeValueInput) {
+    this.incomeID = incomeID;
+    this.incomeValueInput = incomeValueInput;
+    this.incomeNameInput = incomeNameInput;
+  }
 }
 
-function rmaddbnt2() {
-    function createEL(){
-        let textarea = document.createElement('ul');
-        // textarea.innerHTML = intext;
-        let bntadd=document.createElement('button');
-        bntadd.innerHTML = 'Edytuj';
-        let bntrm = document.createElement('button');
-        bntrm.innerHTML = 'Usuń';
-        let bodyadd = document.querySelector('#costs .elements');
-        let list = document.createElement('li');
-        let box = document.createElement('div');
-        box.style.display = 'flex';
-        bodyadd.appendChild(box);
-        box.appendChild(textarea)
-        box.appendChild(bntadd);
-        box.appendChild(bntrm);
-        textarea.appendChild(list);
-    }
-
-    createEL()
+//Add to table new income
+function appendList() {
+  const newincome = new IncomeList(
+    incomeID,
+    incomeNameInput.value,
+    incomeValueInput.value
+  );
+  incomeTable.push(newincome);
+  incomeID++;
 }
+//sum all income
+function sumInput() {
+  const incomeDiv = document.querySelector(".sumAll");
+  const arrayValue = incomeTable.map((number) =>
+    parseInt(number.incomeValueInput)
+  );
+  const sum = arrayValue.reduce((acc, number) => {
+    return acc + number;
+  }, 0);
+  incomeDiv.innerHTML = sum;
+}
+//editfunction
+// const bntIncomeEdit = document.querySelector("#incomeEdit");
+//
 
-let action = document.querySelector('#income .add');
-action.addEventListener('click', rmaddbnt);
+//Remove function
 
-let action2 = document.querySelector('#costs .add');
-action2.addEventListener('click', rmaddbnt2);
+// Create income list
+
+//active all functions
+incomeAddButton.addEventListener("click", addList);
+incomeAddButton.addEventListener("click", appendList);
+incomeAddButton.addEventListener("click", sumInput);
