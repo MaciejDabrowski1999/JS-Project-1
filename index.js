@@ -5,37 +5,16 @@ const incomeAddButton = document.querySelector(".incomeAddButton");
 
 //zmienneincome
 let incomeID = 1;
+let incomeEditID = 1;
 let incomeTable = [];
 
-function addList() {
-  const listIncome = document.createElement("li");
-  const divInputName = document.createElement("div");
-  const divInputValue = document.createElement("div");
-  const buttonIncomeEdit = document.createElement("button");
-  const buttonIncomeRemove = document.createElement("button");
-
-  buttonIncomeRemove.innerHTML = "Usuń";
-  buttonIncomeEdit.innerHTML = "Edytuj";
-
-  buttonIncomeRemove.setAttribute("class", "incomeRemove");
-
-  listIncome.setAttribute("display", "flex");
-  divInputName.setAttribute("contenteditable", false);
-  divInputValue.setAttribute("contenteditable", false);
-  divInputName.setAttribute("class", "listDiv");
-  divInputValue.setAttribute("class", "listDiv");
-  incomeUl.appendChild(listIncome);
-  listIncome.appendChild(divInputName);
-  listIncome.appendChild(divInputValue);
-  listIncome.appendChild(buttonIncomeEdit);
-  listIncome.appendChild(buttonIncomeRemove);
-}
 // Class for Income
 class IncomeList {
-  constructor(incomeID, incomeNameInput, incomeValueInput) {
-    this.incomeID = incomeID;
+  constructor(incomeID, incomeNameInput, incomeValueInput, incomeEditID) {
+    this.incomeID = "Income" + incomeID;
     this.incomeValueInput = incomeValueInput;
     this.incomeNameInput = incomeNameInput;
+    this.incomeEditID = "IncomeEdit" + incomeEditID;
   }
 }
 
@@ -44,10 +23,12 @@ function appendList() {
   const newincome = new IncomeList(
     incomeID,
     incomeNameInput.value,
-    incomeValueInput.value
+    incomeValueInput.value,
+    incomeEditID
   );
   incomeTable.push(newincome);
   incomeID++;
+  incomeEditID++;
 }
 //sum all income
 function sumInput() {
@@ -60,7 +41,32 @@ function sumInput() {
   }, 0);
   incomeDiv.innerHTML = sum;
 }
-//Push to html function
+
+function incomeForEach() {
+  const listIncome = document.createElement("li");
+  const divIncomeName = document.createElement("div");
+  const divIncomeValue = document.createElement("div");
+  const buttonIncomeEdit = document.createElement("button");
+  const buttonIncomeRemove = document.createElement("button");
+  buttonIncomeRemove.innerHTML = "Usuń";
+  buttonIncomeEdit.innerHTML = "Edytuj";
+  buttonIncomeRemove.setAttribute("class", "incomeRemove");
+  listIncome.setAttribute("display", "flex");
+  divIncomeName.setAttribute("class", "listDiv");
+  divIncomeValue.setAttribute("class", "listDiv");
+  incomeUl.appendChild(listIncome);
+  listIncome.appendChild(divIncomeName);
+  listIncome.appendChild(divIncomeValue);
+  listIncome.appendChild(buttonIncomeEdit);
+  listIncome.appendChild(buttonIncomeRemove);
+
+  incomeTable.forEach((element) => {
+    listIncome.id = element.incomeID;
+    buttonIncomeEdit.id = element.incomeEditID;
+    divIncomeName.innerHTML = element.incomeNameInput;
+    divIncomeValue.innerHTML = element.incomeValueInput;
+  });
+}
 
 //editfunction
 // const bntIncomeEdit = document.querySelector("#incomeEdit");
@@ -71,6 +77,10 @@ function sumInput() {
 // Create income list
 
 //active all functions
-incomeAddButton.addEventListener("click", addList);
+// incomeAddButton.addEventListener("click", addList);
 incomeAddButton.addEventListener("click", appendList);
 incomeAddButton.addEventListener("click", sumInput);
+incomeAddButton.addEventListener("click", incomeForEach);
+
+let tab = incomeTable;
+console.log(tab);
