@@ -5,10 +5,7 @@ const incomeAddButton = document.querySelector(".incomeAddButton");
 
 //zmienneincome
 let incomeID = 1;
-let listIncomeID = 1;
 let incomeTable = [];
-let bntIncomeEditId = 1;
-let listIncomeTable = [];
 
 function addList() {
   const listIncome = document.createElement("li");
@@ -63,6 +60,8 @@ function sumInput() {
   }, 0);
   incomeDiv.innerHTML = sum;
 }
+//Push to html function
+
 //editfunction
 // const bntIncomeEdit = document.querySelector("#incomeEdit");
 //
