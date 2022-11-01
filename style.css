@@ -49,6 +49,10 @@ section h1 {
   transition: background-color 2s;
   background-color: white;
 }
+.incomeName {
+  transition: background-color 2s;
+  background-color: white;
+}
 #costs {
   margin: 5%;
   background-color: rgb(0, 255, 255);
