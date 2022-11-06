@@ -4,27 +4,30 @@ const incomeNameInput = document.querySelector(".incomeName");
 const incomeAddButton = document.querySelector(".incomeAddButton");
 
 //zmienneincome
-let incomeID = 1;
-let incomeEditID = 1;
+let incomeID = 0;
+let incomeEditId = 0;
 let incomeTable = [];
 
 // Class for Income
 class IncomeList {
   constructor(
     incomeID,
+    incomeEditId,
+    incomeEditCheck,
     incomeNameInputClass,
-    incomeValueInputClass,
-    incomeEditID
+    incomeValueInputClass
   ) {
-    this.incomeID = "Income" + incomeID;
+    this.incomeID = "list" + incomeID;
+    this.incomeEditId = "edit" + incomeEditId;
+    this.incomeEditCheck = incomeEditCheck;
     this.incomeValueInputClass = incomeValueInputClass;
     this.incomeNameInputClass = incomeNameInputClass;
-    this.incomeEditID = "IncomeEdit" + incomeEditID;
   }
 }
 //Income code
 function incomeCheck() {
-  const incomeName = incomeNameInput.value;
+  //validation
+  let incomeEditCheck = false;
   let incomeValue = parseInt(incomeValueInput.value);
   if (incomeValue < 0) {
     incomeValueInput.setAttribute("placeholder", "Za niska wartość");
@@ -80,18 +83,20 @@ function incomeCheck() {
     function test() {
       console.log("test1");
     }
+    //create new list
     function createClass() {
       const newincome = new IncomeList(
         incomeID,
+        incomeEditId,
+        incomeEditCheck,
         incomeNameInput.value,
-        incomeValueInput.value,
-        incomeEditID
+        incomeValueInput.value
       );
       incomeTable.push(newincome);
       incomeID++;
-      incomeEditID++;
+      incomeEditId++;
     }
-
+    //create elements
     const createElement = () => {
       const listIncome = document.createElement("li");
       const divIncomeName = document.createElement("div");
@@ -102,8 +107,10 @@ function incomeCheck() {
       buttonIncomeEdit.innerHTML = "Edytuj";
       buttonIncomeRemove.setAttribute("class", "incomeRemove");
       listIncome.setAttribute("display", "flex");
+      listIncome.setAttribute("onClick", "incomeEdit(this.id)");
       divIncomeName.setAttribute("class", "listDiv");
       divIncomeValue.setAttribute("class", "listDiv");
+      buttonIncomeEdit.setAttribute("onClick", "editTask(this.id)");
       incomeUl.appendChild(listIncome);
       listIncome.appendChild(divIncomeName);
       listIncome.appendChild(divIncomeValue);
@@ -112,12 +119,12 @@ function incomeCheck() {
 
       incomeTable.forEach((element) => {
         listIncome.id = element.incomeID;
-        buttonIncomeEdit.id = element.incomeEditID;
+        buttonIncomeEdit.id = element.incomeEditId;
         divIncomeName.innerHTML = element.incomeNameInputClass;
         divIncomeValue.innerHTML = element.incomeValueInputClass;
       });
     };
-
+    //sum table
     const sumAll = () => {
       const incomeDiv = document.querySelector(".sumAll");
       const arrayValue = incomeTable.map((number) =>
@@ -128,16 +135,35 @@ function incomeCheck() {
       }, 0);
       incomeDiv.innerHTML = sum;
     };
-    test(), createClass(), createElement(), sumAll();
+    test(), createClass(), createElement(), sumAll(), editTask(), incomeEdit();
   }
   incomeValueInput.value = "";
   incomeNameInput.value = "";
 }
 
 //editfunction
-// const bntIncomeEdit = document.querySelector("#incomeEdit");
-//
+const incomeEdit = (el) => {
+  console.log(el);
+};
+function editTask(edit) {
+  console.log("test2");
+  console.log(incomeTable);
+  const idListCheck = incomeTable.map((element) => {
+    const name = element.incomeID;
+    const splitName = name.split("");
+    const idName = splitName[splitName.length - 1];
+    return idName;
+  });
+  const idEditCheck = incomeTable.map((element) => {
+    const edit = element.incomeEditId;
+    const splitEdit = edit.split("");
+    const idEdit = splitEdit[splitEdit.length - 1];
+    return idEdit;
+  });
+  console.log(idListCheck);
+  console.log(idEditCheck);
+  const editDiv = document.getElementById(idEditCheck);
+}
 
 //Remove function
-
 incomeAddButton.addEventListener("click", incomeCheck);
