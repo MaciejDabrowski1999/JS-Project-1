@@ -5,21 +5,12 @@ const incomeAddButton = document.querySelector(".incomeAddButton");
 
 //zmienneincome
 let incomeID = 0;
-let incomeEditId = 0;
 let incomeTable = [];
 
 // Class for Income
 class IncomeList {
-  constructor(
-    incomeID,
-    incomeEditId,
-    incomeEditCheck,
-    incomeNameInputClass,
-    incomeValueInputClass
-  ) {
-    this.incomeID = "list" + incomeID;
-    this.incomeEditId = "edit" + incomeEditId;
-    this.incomeEditCheck = incomeEditCheck;
+  constructor(incomeID, incomeNameInputClass, incomeValueInputClass) {
+    this.incomeID = incomeID;
     this.incomeValueInputClass = incomeValueInputClass;
     this.incomeNameInputClass = incomeNameInputClass;
   }
@@ -27,7 +18,6 @@ class IncomeList {
 //Income code
 function incomeCheck() {
   //validation
-  let incomeEditCheck = false;
   let incomeValue = parseInt(incomeValueInput.value);
   if (incomeValue < 0) {
     incomeValueInput.setAttribute("placeholder", "Za niska wartość");
@@ -87,14 +77,11 @@ function incomeCheck() {
     function createClass() {
       const newincome = new IncomeList(
         incomeID,
-        incomeEditId,
-        incomeEditCheck,
-        incomeNameInput.value,
+        incomeNameInput.value.trim(),
         incomeValueInput.value
       );
       incomeTable.push(newincome);
       incomeID++;
-      incomeEditId++;
     }
     //create elements
     const createElement = () => {
@@ -106,8 +93,8 @@ function incomeCheck() {
       buttonIncomeRemove.innerHTML = "Usuń";
       buttonIncomeEdit.innerHTML = "Edytuj";
       buttonIncomeRemove.setAttribute("class", "incomeRemove");
+      buttonIncomeRemove.setAttribute("onClick", "deleteIncome(this.id)");
       listIncome.setAttribute("display", "flex");
-      listIncome.setAttribute("onClick", "incomeEdit(this.id)");
       divIncomeName.setAttribute("class", "listDiv");
       divIncomeValue.setAttribute("class", "listDiv");
       buttonIncomeEdit.setAttribute("onClick", "editTask(this.id)");
@@ -118,8 +105,11 @@ function incomeCheck() {
       listIncome.appendChild(buttonIncomeRemove);
 
       incomeTable.forEach((element) => {
-        listIncome.id = element.incomeID;
-        buttonIncomeEdit.id = element.incomeEditId;
+        listIncome.id = "incomeList" + element.incomeID;
+        buttonIncomeEdit.id = "incomeEdit" + element.incomeID;
+        buttonIncomeRemove.id = "incomeDelete" + element.incomeID;
+        divIncomeName.id = "incomeNameDiv" + element.incomeID;
+        divIncomeValue.id = "incomeValueDiv" + element.incomeID;
         divIncomeName.innerHTML = element.incomeNameInputClass;
         divIncomeValue.innerHTML = element.incomeValueInputClass;
       });
@@ -135,35 +125,41 @@ function incomeCheck() {
       }, 0);
       incomeDiv.innerHTML = sum;
     };
-    test(), createClass(), createElement(), sumAll(), editTask(), incomeEdit();
+    test(), createClass(), createElement(), sumAll();
   }
   incomeValueInput.value = "";
   incomeNameInput.value = "";
 }
 
 //editfunction
-const incomeEdit = (el) => {
-  console.log(el);
-};
+
 function editTask(edit) {
-  console.log("test2");
-  console.log(incomeTable);
-  const idListCheck = incomeTable.map((element) => {
-    const name = element.incomeID;
-    const splitName = name.split("");
-    const idName = splitName[splitName.length - 1];
-    return idName;
-  });
-  const idEditCheck = incomeTable.map((element) => {
-    const edit = element.incomeEditId;
-    const splitEdit = edit.split("");
-    const idEdit = splitEdit[splitEdit.length - 1];
-    return idEdit;
-  });
-  console.log(idListCheck);
-  console.log(idEditCheck);
-  const editDiv = document.getElementById(idEditCheck);
+  console.log(edit);
 }
 
 //Remove function
+function deleteIncome(deleteIncome) {
+  let deleteIdArray = [];
+  deleteIdArray.push(deleteIncome);
+  const deleteNumber = deleteIdArray[0].split("");
+  let idNumber = deleteNumber[12];
+
+  incomeTable.splice(idNumber, 1);
+  let element = document.querySelector("#incomeList" + idNumber);
+  element.remove();
+  const sumAll = () => {
+    const incomeDiv = document.querySelector(".sumAll");
+    const arrayValue = incomeTable.map((number) =>
+      parseInt(number.incomeValueInputClass)
+    );
+    const sum = arrayValue.reduce((acc, number) => {
+      return acc + number;
+    }, 0);
+    incomeDiv.innerHTML = sum;
+  };
+  sumAll();
+  console.log(idNumber);
+  console.log(incomeTable);
+}
+//active all functions
 incomeAddButton.addEventListener("click", incomeCheck);
