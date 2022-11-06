@@ -95,6 +95,7 @@ function incomeCheck() {
       buttonIncomeRemove.setAttribute("class", "incomeRemove");
       buttonIncomeRemove.setAttribute("onClick", "deleteIncome(this.id)");
       listIncome.setAttribute("display", "flex");
+      listIncome.setAttribute("class", "incomeList");
       divIncomeName.setAttribute("class", "listDiv");
       divIncomeValue.setAttribute("class", "listDiv");
       buttonIncomeEdit.setAttribute("onClick", "editTask(this.id)");
@@ -105,11 +106,11 @@ function incomeCheck() {
       listIncome.appendChild(buttonIncomeRemove);
 
       incomeTable.forEach((element) => {
-        listIncome.id = "incomeList" + element.incomeID;
-        buttonIncomeEdit.id = "incomeEdit" + element.incomeID;
-        buttonIncomeRemove.id = "incomeDelete" + element.incomeID;
-        divIncomeName.id = "incomeNameDiv" + element.incomeID;
-        divIncomeValue.id = "incomeValueDiv" + element.incomeID;
+        listIncome.id = element.incomeID;
+        buttonIncomeEdit.id = element.incomeID;
+        buttonIncomeRemove.id = element.incomeID;
+        divIncomeName.id = element.incomeID;
+        divIncomeValue.id = element.incomeID;
         divIncomeName.innerHTML = element.incomeNameInputClass;
         divIncomeValue.innerHTML = element.incomeValueInputClass;
       });
@@ -133,20 +134,33 @@ function incomeCheck() {
 
 //editfunction
 
-function editTask(edit) {
-  console.log(edit);
+function editTask(editIncome) {
+  let editIdArray = [];
+  editIdArray.push(editIncome);
+  const editNumber = editIdArray[0].split("");
+  let idNumber = editNumber[10];
+  console.log(idNumber);
+  let numId = parseInt(idNumber);
 }
 
 //Remove function
 function deleteIncome(deleteIncome) {
-  let deleteIdArray = [];
-  deleteIdArray.push(deleteIncome);
-  const deleteNumber = deleteIdArray[0].split("");
-  let idNumber = deleteNumber[12];
+  let idNumber = deleteIncome;
+  // let deleteIdArray = [];
+  // deleteIdArray.push(deleteIncome);
+  // const deleteNumber = deleteIdArray[0].split("");
+  // let deleteNumberCount = deleteNumber.length;
 
-  incomeTable.splice(idNumber, 1);
-  let element = document.querySelector("#incomeList" + idNumber);
+  let numId = parseInt(idNumber);
+  for (let i = 0; i < incomeTable.length; i++)
+    if (incomeTable[i].incomeID === numId) {
+      incomeTable.splice(i, 1);
+      break;
+    }
+  let element = document.querySelector("#income\\" + "#\\" + idNumber);
   element.remove();
+
+  //update sum div
   const sumAll = () => {
     const incomeDiv = document.querySelector(".sumAll");
     const arrayValue = incomeTable.map((number) =>
@@ -158,8 +172,6 @@ function deleteIncome(deleteIncome) {
     incomeDiv.innerHTML = sum;
   };
   sumAll();
-  console.log(idNumber);
-  console.log(incomeTable);
 }
 //active all functions
 incomeAddButton.addEventListener("click", incomeCheck);
