@@ -98,6 +98,7 @@ function incomeCheck() {
       listIncome.setAttribute("class", "incomeList");
       divIncomeName.setAttribute("class", "listDiv");
       divIncomeValue.setAttribute("class", "listDiv");
+      buttonIncomeEdit.setAttribute("class", "incomeEdit");
       buttonIncomeEdit.setAttribute("onClick", "editIncome(this.id)");
       incomeUl.appendChild(listIncome);
       listIncome.appendChild(divIncomeName);
@@ -109,8 +110,8 @@ function incomeCheck() {
         listIncome.id = "incomeList" + element.incomeID;
         buttonIncomeEdit.id = "incomeEdit" + element.incomeID;
         buttonIncomeRemove.id = "incomeDelete" + element.incomeID;
-        // divIncomeName.id = "incomeDivName" + element.incomeID;
-        // divIncomeValue.id = "incomeDivValue" + element.incomeID;
+        divIncomeName.id = "incomeDivName" + element.incomeID;
+        divIncomeValue.id = "incomeDivValue" + element.incomeID;
         divIncomeName.innerHTML = element.incomeNameInputClass;
         divIncomeValue.innerHTML = element.incomeValueInputClass;
       });
@@ -134,49 +135,193 @@ function incomeCheck() {
 
 //editfunction
 
-function editIncome(editIncome) {
-  let editIdArray = [];
-  editIdArray.push(editIncome);
-  const editNumber = editIdArray[0].split("");
-  console.log(editNumber);
+function editIncome(editID) {
+  let id = editID;
+  // let idNumber;
+  function log() {
+    let editIdArray = [];
+    editIdArray.push(id);
+    const editNumberID = editIdArray[0].split("");
+
+    if ((editNumberID.length = 10 && incomeTable.length < 10)) {
+      idNumber = editNumberID[10];
+      console.log(idNumber);
+      console.log(editNumberID[10]);
+      console.log(editNumberID.length);
+    } else {
+      alert("błąd");
+    }
+  }
+  log();
+  // function chcekNumber() {
+  //   let idNumber;
+  //   console.log(editNumberID[10]);
+  //   if ((editNumberID.length = 10 && incomeTable.length < 10)) {
+  //     idNumber = editNumberID[10];
+  //     console.log(idNumber);
+  //     console.log(editNumberID[10]);
+  //     console.log(idNumber);
+  //   } else if ((editNumberID.length = 11 && incomeTable >= 10)) {
+  //     let num1 = editNumberID[10];
+  //     let num2 = editNumberID[11];
+  //     idNumber = num1 + num2;
+  //     console.log(idNumber);
+  //   } else {
+  //     let num1 = editNumberID[10];
+  //     let num2 = editNumberID[11];
+  //     let num3 = editNumberID[12];
+  //     idNumber = num1 + num2 + num3;
+  //     console.log(idNumber);
+  //   }
+  //   return idNumber;
+  // }
+  // chcekNumber();
+  function areaDisable() {
+    incomeUl.setAttribute("aria-disabled", "true");
+    incomeAddButton.setAttribute("aria-disabled", "true");
+    const editButton = document.querySelectorAll(".incomeEdit");
+    // for (let i=0; i<editButton.length; i++){
+    //   editButton.setAttribute("aria-disabled", "true");
+    //   break;
+    // }
+    const removeButton = document.querySelectorAll(".incomeRemove");
+    removeButton.setAttribute("aria-disabled", "true");
+  }
   //find id
   function findID() {
-    console.log(editNumber);
-    let idNumber = editNumber[10];
     let numId = parseInt(idNumber);
-
     incomeNameInput.value = incomeTable[numId].incomeNameInputClass;
     incomeValueInput.value = incomeTable[numId].incomeValueInputClass;
-  }
-  function updateIncome() {
-    let idNumber = editNumber[10];
-    let numId = parseInt(idNumber);
-    console.log(numId);
-    const incomeName = incomeNameInput.value;
-    const incomeValue = incomeValueInput.value;
-    incomeTable[numId].incomeNameInputClass.push(incomeName);
-    incomeTable[numId].incomeValueInputClass.push(incomeValue);
   }
   function createUpdateButton() {
     const updateButton = document.createElement("button");
     updateButton.innerHTML = "Zapisz";
-    updateButton.id = "incomeUpdateButton";
+    updateButton.id = "incomeUpdateButton" + idNumber;
     updateButton.setAttribute("class", "updateButton");
-    updateButton.setAttribute("onClick", "updateIncome()");
+    updateButton.setAttribute("onClick", "updateIncome(this.id)");
     const incomeDiv = document.querySelector(".mainConsole");
     incomeDiv.appendChild(updateButton);
   }
-  // incomeAddButton.remove();
-  createUpdateButton();
-  findID();
-  updateIncome();
+  // findID();
+  // createUpdateButton();
 }
-function updateIncome() {
-  const incomeName = incomeNameInput.value;
-  const incomeValue = incomeValueInput.value;
-  incomeTable[numId].incomeNameInputClass.push(incomeName);
-  incomeTable[numId].incomeValueInputClass.push(incomeValue);
+function updateIncome(updateID) {
+  let updateIdArray = [];
+  updateIdArray.push(updateID);
+  const updateNumber = updateIdArray[0].split("");
+  console.log(updateNumber);
+  if (incomeTable.length < 10 && updateNumber.length === 19) {
+    let idNumber = updateNumber[18];
+
+    incomeTable[idNumber].incomeNameInputClass = incomeNameInput.value;
+    incomeTable[idNumber].incomeValueInputClass = parseInt(
+      incomeValueInput.value
+    );
+
+    let divUpdateName = document.querySelector("#incomeDivName" + idNumber);
+    let divUpdateValue = document.querySelector("#incomeDivValue" + idNumber);
+
+    divUpdateName.innerHTML = incomeNameInput.value;
+    divUpdateValue.innerHTML = incomeValueInput.value;
+
+    const updateButton = document.querySelector(
+      "#incomeUpdateButton" + idNumber
+    );
+    updateButton.remove();
+    incomeNameInput.value = "";
+    incomeValueInput.value = "";
+  } else if (incomeTable.length > 10 && updateNumber.length === 19) {
+    let idNumber = updateNumber[18];
+
+    incomeTable[idNumber].incomeNameInputClass = incomeNameInput.value;
+    incomeTable[idNumber].incomeValueInputClass = parseInt(
+      incomeValueInput.value
+    );
+
+    let divUpdateName = document.querySelector("#incomeDivName" + idNumber);
+    let divUpdateValue = document.querySelector("#incomeDivValue" + idNumber);
+
+    divUpdateName.innerHTML = incomeNameInput.value;
+    divUpdateValue.innerHTML = incomeValueInput.value;
+
+    const updateButton = document.querySelector(
+      "#incomeUpdateButton" + idNumber
+    );
+    updateButton.remove();
+    incomeNameInput.value = "";
+    incomeValueInput.value = "";
+  } else if ((incomeTable.length = 10 && updateNumber.length === 20)) {
+    let num1 = updateNumber[18];
+    let num2 = updateNumber[19];
+    let idNumber = num1 + num2;
+
+    incomeTable[idNumber].incomeNameInputClass =
+      document.querySelector(".incomeName").value;
+    incomeTable[idNumber].incomeValueInputClass = parseInt(
+      incomeValueInput.value
+    );
+
+    let divUpdateName = document.querySelector("#incomeDivName" + idNumber);
+    let divUpdateValue = document.querySelector("#incomeDivValue" + idNumber);
+
+    divUpdateName.innerHTML = incomeNameInput.value;
+    divUpdateValue.innerHTML = incomeValueInput.value;
+
+    const updateButton = document.querySelector(
+      "#incomeUpdateButton" + idNumber
+    );
+    updateButton.remove();
+    incomeNameInput.value = "";
+    incomeValueInput.value = "";
+  } else if (incomeTable.length >= 10 && updateNumber.length === 20) {
+    let num1 = updateNumber[18];
+    let num2 = updateNumber[19];
+    let idNumber = num1 + num2;
+
+    incomeTable[idNumber].incomeNameInputClass = incomeNameInput.value;
+    incomeTable[idNumber].incomeValueInputClass = parseInt(
+      incomeValueInput.value
+    );
+
+    let divUpdateName = document.querySelector("#incomeDivName" + idNumber);
+    let divUpdateValue = document.querySelector("#incomeDivValue" + idNumber);
+
+    divUpdateName.innerHTML = incomeNameInput.value;
+    divUpdateValue.innerHTML = incomeValueInput.value;
+
+    const updateButton = document.querySelector(
+      "#incomeUpdateButton" + idNumber
+    );
+    updateButton.remove();
+    incomeNameInput.value = "";
+    incomeValueInput.value = "";
+  } else {
+    let num1 = updateNumber[18];
+    let num2 = updateNumber[19];
+    let num3 = updateNumber[20];
+
+    let idNumber = num1 + num2 + num3;
+
+    incomeTable[idNumber].incomeNameInputClass = incomeNameInput.value;
+    incomeTable[idNumber].incomeValueInputClass = parseInt(
+      incomeValueInput.value
+    );
+
+    let divUpdateName = document.querySelector("#incomeDivName" + idNumber);
+    let divUpdateValue = document.querySelector("#incomeDivValue" + idNumber);
+
+    divUpdateName.innerHTML = incomeNameInput.value;
+    divUpdateValue.innerHTML = incomeValueInput.value;
+
+    const updateButton = document.querySelector(
+      "#incomeUpdateButton" + idNumber
+    );
+    updateButton.remove();
+    incomeNameInput.value = "";
+    incomeValueInput.value = "";
+  }
 }
+
 //Remove function
 function deleteIncome(deleteIncome) {
   //id button and list
