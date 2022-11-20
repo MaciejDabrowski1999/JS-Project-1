@@ -10,15 +10,16 @@
   <body>
     <div class="container">
       <section id="logo">
-        <div><img src="Logo/Logo.png" alt="logo" class="logo" /></div>
+        <div class="pic"></div>
       </section>
       <nav>
-        <div id="message"></div>
+        <h2>Twoje oszczędności</h2>
+        <div id="message">0</div>
       </nav>
       <div class="main_box">
         <section id="income">
           <h1>Przychody</h1>
-          <div class="mainConsole">
+          <div class="mainConsoleIncome">
             <input
               type="text"
               name="incomeName"
@@ -38,11 +39,23 @@
         </section>
         <section id="costs">
           <h1>Koszty</h1>
-          <input type="text" name="input-name" placeholder="Nazwa wydatku" />
-          <input type="number" name="input-value" placeholder="Kwota" />
-          <input type="submit" class="add" value="Dodaj" />
-          <div class="elements"></div>
-          <div class="sum_all"></div>
+          <div class="mainConsoleCosts">
+            <input
+              type="text"
+              name="input-name"
+              placeholder="Nazwa wydatku"
+              class="costsName"
+            />
+            <input
+              type="number"
+              name="input-value"
+              placeholder="Kwota"
+              class="costsValue"
+            />
+            <input type="submit" class="costsAddButton" value="Dodaj" />
+            <ul class="costsList"></ul>
+            <div class="sumAllCosts"></div>
+          </div>
         </section>
       </div>
     </div>
