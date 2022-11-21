@@ -1,71 +1,93 @@
+@font-face {
+  font-family: "Ubuntu Mono", monospace;
+  src: url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap");
+}
 html {
   scroll-behavior: smooth;
+  font-family: "Ubuntu Mono", monospace;
 }
 .container {
   margin: 0 auto;
   padding: 0;
-  background: linear-gradient(
-    90deg,
-    rgb(235, 255, 255) 0%,
-    white 10%,
-    white 90%,
-    rgb(235, 255, 255) 100%
-  );
+  background: linear-gradient(170deg, #4ab1ff, #2d5cfe);
   height: 100vh;
 }
 .box {
   margin: 0 auto;
-  width: 90%;
+  width: 80%;
   background-color: white;
+  border-radius: 7px;
+  box-shadow: 0px 0px 5px -1px;
 }
-.main-section {
-  width: 80vw;
-}
-#logo div {
-  width: 20vw;
-  height: auto;
+.main {
   display: flex;
   justify-content: center;
-}
-.logo {
-  /* background-image: url(Logo/Logo.png); */
-  width: 40%;
-  height: 40%;
-}
-.pic {
-  background-image: "/logo.png";
-}
-.main_box {
-  display: flex;
-  justify-content: center;
-
-  width: 100vw;
+  flex-wrap: wrap;
 }
 nav {
   text-align: center;
+  color: white;
 }
-
-section h1 {
+#income {
+  padding-right: 2.5%;
+}
+#costs {
+  padding-left: 2.5%;
+}
+section h2 {
   text-align: center;
 }
+.input {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.label {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.label:nth-of-type(even) {
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+.textArea {
+  margin-right: 5px;
+  height: 20px;
+  font-family: "Ubuntu Mono", monospace;
+  box-shadow: 0px 0px 2px -1px;
+  border: none;
+}
+.textAreaLeft {
+  margin-left: 5px;
+  height: 20px;
+  font-family: "Ubuntu Mono", monospace;
+  box-shadow: 0px 0px 2px -1px;
+  border: none;
+}
+
+.add {
+  width: 100%;
+  margin-top: 5px;
+}
+.add:hover {
+  background-color: green;
+}
+
 .elements {
   display: flex;
   flex-direction: column;
 }
-.incomeValue {
-  transition: background-color 2s;
-  background-color: white;
-}
-.incomeName {
-  transition: background-color 2s;
-  background-color: white;
-}
 
-.add {
-  background-color: green;
-}
 .listDiv {
   width: 50%;
   display: inline;
   padding-right: 25%;
+}
+.liItem {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
 }

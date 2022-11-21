@@ -13,52 +13,75 @@
         <div class="pic"></div>
       </section>
       <nav>
-        <h2>Twoje oszczędności</h2>
+        <h1>Twoje oszczędności</h1>
         <div id="message">0</div>
       </nav>
-      <div class="main_box">
+      <div class="main box">
         <section id="income">
-          <h1>Przychody</h1>
+          <h2>Przychody</h2>
           <div class="mainConsoleIncome">
-            <input
-              type="text"
-              name="incomeName"
-              placeholder="Nazwa przychodu"
-              class="incomeName input-name"
-            />
-            <input
-              type="number"
-              name="incomeValue"
-              placeholder="Kwota"
-              class="incomeValue input-value"
-            />
-            <input type="submit" class="incomeAddButton add" value="Dodaj" />
+            <section class="input">
+              <div class="label">
+                <label for="incomeName">Nazwa</label>
+                <input
+                  type="text"
+                  name="incomeName"
+                  placeholder="Nazwa przychodu"
+                  class="name textArea"
+                />
+              </div>
+              <div class="label">
+                <laber for="incomeValue">Wartość</laber>
+                <input
+                  type="number"
+                  name="incomeValue"
+                  placeholder="Kwota"
+                  class="value textAreaLeft"
+                />
+              </div>
+            </section>
+            <input type="submit" class="addButton add" value="Dodaj" />
           </div>
-          <ul class="listItem incomeList"></ul>
-          <div class="sumAll"></div>
+          <ul class="listItem list"></ul>
+          <section>
+            <p>Suma</p>
+            <div class="sumAll">0</div>
+          </section>
         </section>
         <section id="costs">
-          <h1>Koszty</h1>
+          <h2>Koszty</h2>
           <div class="mainConsoleCosts">
-            <input
-              type="text"
-              name="input-name"
-              placeholder="Nazwa wydatku"
-              class="costsName"
-            />
-            <input
-              type="number"
-              name="input-value"
-              placeholder="Kwota"
-              class="costsValue"
-            />
-            <input type="submit" class="costsAddButton" value="Dodaj" />
-            <ul class="costsList"></ul>
-            <div class="sumAllCosts"></div>
+            <section class="input">
+              <div class="label">
+                <label for="costsName">Nazwa</label>
+                <input
+                  type="text"
+                  name="costsName"
+                  placeholder="Nazwa wydatku"
+                  class="name textArea"
+                />
+              </div>
+              <div class="label">
+                <label for="costsValue">Wartość</label>
+                <input
+                  type="number"
+                  name="costsValue"
+                  placeholder="Kwota"
+                  class="value textAreaLeft"
+                />
+              </div>
+            </section>
+            <input type="submit" class="addButton add" value="Dodaj" />
+            <ul class="list"></ul>
+            <section class="sum">
+              <p>Suma</p>
+              <div class="sumAll">0</div>
+            </section>
           </div>
         </section>
       </div>
     </div>
+    <button id="chcek">test</button>
     <script src="index.js"></script>
   </body>
 </html>

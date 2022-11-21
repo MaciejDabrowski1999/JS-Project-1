@@ -1,11 +1,11 @@
-const incomeUl = document.querySelector(".incomeList");
-const incomeValueInput = document.querySelector(".incomeValue");
-const incomeNameInput = document.querySelector(".incomeName");
-const incomeAddButton = document.querySelector(".incomeAddButton");
-const costsUl = document.querySelector(".costsList");
-const costsValueInput = document.querySelector(".costsValue");
-const costsNameInput = document.querySelector(".costsName");
-const costsAddButton = document.querySelector(".costsAddButton");
+const incomeUl = document.querySelector("#income .list");
+const incomeValueInput = document.querySelector("#income .value");
+const incomeNameInput = document.querySelector("#income .name");
+const incomeAddButton = document.querySelector("#income .addButton");
+const costsUl = document.querySelector("#costs .list");
+const costsValueInput = document.querySelector("#costs .value");
+const costsNameInput = document.querySelector("#costs .name");
+const costsAddButton = document.querySelector("#costs .addButton");
 const divMessage = document.querySelector("#message");
 
 //zmienneincome
@@ -38,7 +38,7 @@ class CostsList {
 //sum for income
 
 const sumAll = () => {
-  const incomeDiv = document.querySelector(".sumAll");
+  const incomeDiv = document.querySelector("#income .sumAll");
   const arrayValue = incomeTable.map((number) =>
     parseInt(number.incomeValueInputClass)
   );
@@ -50,7 +50,7 @@ const sumAll = () => {
 
 //sum for costs
 const sumAllCosts = () => {
-  const costsDiv = document.querySelector(".sumAllCosts");
+  const costsDiv = document.querySelector("#costs .sumAll");
   const arrayValue = costsTable.map((number) =>
     parseInt(number.costsValueInputClass)
   );
@@ -129,7 +129,7 @@ function incomeCheck() {
       buttonIncomeRemove.innerHTML = "Usuń";
       buttonIncomeEdit.innerHTML = "Edytuj";
       buttonIncomeRemove.setAttribute("class", "incomeRemove");
-      listIncome.setAttribute("class", "incomeList");
+      listIncome.setAttribute("class", "liItem");
       divIncomeName.setAttribute("class", "listDiv");
       divIncomeValue.setAttribute("class", "listDiv");
       buttonIncomeEdit.setAttribute("class", "incomeEdit");
@@ -165,7 +165,6 @@ function incomeCheck() {
 
 function costsCheck() {
   //validation
-  let incomeValue = parseInt(incomeValueInput.value);
   let costsValue = parseInt(costsValueInput.value);
   let costsName = costsNameInput.value;
   const wrongValueNumber = () => {
@@ -230,7 +229,7 @@ function costsCheck() {
       buttonCostsRemove.innerHTML = "Usuń";
       buttonCostsEdit.innerHTML = "Edytuj";
       buttonCostsRemove.setAttribute("class", "costsRemove");
-      listCosts.setAttribute("class", "costsList");
+      listCosts.setAttribute("class", "liItem");
       divCostsName.setAttribute("class", "listDiv");
       divCostsValue.setAttribute("class", "listDiv");
       buttonCostsEdit.setAttribute("class", "costsEdit");
@@ -458,3 +457,17 @@ function freeSavings() {
   let allSum = sumIncome - sumCosts;
   divMessage.innerHTML = allSum;
 }
+
+function chcek(testButton) {
+  let costsButton = true;
+  let typeOf;
+  if ((costsButton = testButton)) {
+    typeOf = "costs";
+  } else {
+    typeOf = "income";
+  }
+  return console.log(typeOf);
+}
+
+costsAddButton.addEventListener("click", chcek(true));
+incomeAddButton.addEventListener("click", chcek(false));
