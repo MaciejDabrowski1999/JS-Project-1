@@ -6,74 +6,83 @@ html {
   scroll-behavior: smooth;
   font-family: "Ubuntu Mono", monospace;
 }
+body {
+  background: linear-gradient(170deg, #4ab1ff, #2d5cfe);
+}
 .container {
   margin: 0 auto;
   padding: 0;
-  background: linear-gradient(170deg, #4ab1ff, #2d5cfe);
   height: 100vh;
 }
 .box {
+  min-width: 240px;
+  max-width: 1200px;
   margin: 0 auto;
   width: 80%;
   background-color: white;
   border-radius: 7px;
-  box-shadow: 0px 0px 5px -1px;
 }
 .main {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   flex-wrap: wrap;
 }
 nav {
+  margin: 0 auto;
+  min-width: 240px;
+  max-width: 1200px;
   text-align: center;
+  width: 80%;
   color: white;
 }
 #income {
-  padding-right: 2.5%;
+  max-width: 500px;
 }
 #costs {
-  padding-left: 2.5%;
+  max-width: 500px;
 }
-section h2 {
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div h2 {
   text-align: center;
+  padding: 0px 10px;
+  margin: 0px;
 }
 .input {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
 }
 
 .label {
-  width: 50%;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   flex-wrap: wrap;
 }
-.label:nth-of-type(even) {
-  align-items: flex-end;
-  flex-wrap: wrap;
-}
 .textArea {
-  margin-right: 5px;
-  height: 20px;
+  text-align: center;
+  height: 30px;
   font-family: "Ubuntu Mono", monospace;
   box-shadow: 0px 0px 2px -1px;
   border: none;
+  border-radius: 5px;
 }
-.textAreaLeft {
-  margin-left: 5px;
-  height: 20px;
-  font-family: "Ubuntu Mono", monospace;
-  box-shadow: 0px 0px 2px -1px;
-  border: none;
-}
-
 .add {
   width: 100%;
   margin-top: 5px;
+  border-radius: 5px;
+  border: none;
 }
 .add:hover {
-  background-color: green;
+  background-color: #198754;
+}
+.remove:hover {
+  background-color: #dc3545;
 }
 
 .elements {
@@ -83,11 +92,51 @@ section h2 {
 
 .listDiv {
   width: 50%;
-  display: inline;
-  padding-right: 25%;
+  max-height: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  padding-right: 0;
+}
+.list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 .liItem {
+  margin: 5px 0px;
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+}
+.sum {
   display: flex;
   justify-content: space-between;
-  list-style: none;
+  align-items: center;
+}
+.center {
+  margin: 0px;
+  padding: 10px;
+}
+
+@media screen and (min-width: 1200px) {
+  #income {
+    padding-right: 2.5%;
+  }
+  #costs {
+    padding-left: 2.5%;
+  }
+  .label {
+    margin-right: 5px;
+  }
+  .label:nth-of-type(even) {
+    margin-right: 0px;
+    margin-left: 5px;
+  }
+  .input {
+    flex-direction: row;
+  }
+  .label:nth-of-type(even) {
+    align-items: flex-end;
+    flex-wrap: wrap;
+  }
 }

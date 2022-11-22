@@ -5,6 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="style.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
     <title>Przychody i wydatki</title>
   </head>
   <body>
@@ -12,13 +18,28 @@
       <section id="logo">
         <div class="pic"></div>
       </section>
-      <nav>
+      <nav class="bg-light bg-gradient bg-opacity-10 navigation">
         <h1>Twoje oszczędności</h1>
-        <div id="message">0</div>
+        <h2 id="message">0</h2>
       </nav>
-      <div class="main box">
+      <div class="main box shadow-sm p-3 mb-5 bg-body rounded">
         <section id="income">
-          <h2>Przychody</h2>
+          <div class="title">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              fill="currentColor"
+              class="bi bi-graph-up-arrow text-success"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z"
+              />
+            </svg>
+            <h2 class="text-success">Przychody</h2>
+          </div>
           <div class="mainConsoleIncome">
             <section class="input">
               <div class="label">
@@ -31,25 +52,40 @@
                 />
               </div>
               <div class="label">
-                <laber for="incomeValue">Wartość</laber>
+                <label for="incomeValue">Wartość</label>
                 <input
                   type="number"
                   name="incomeValue"
-                  placeholder="Kwota"
-                  class="value textAreaLeft"
+                  placeholder="Wpisz wartość"
+                  class="value textArea"
                 />
               </div>
             </section>
-            <input type="submit" class="addButton add" value="Dodaj" />
+            <input type="submit" class="addButton add button" value="Dodaj" />
           </div>
           <ul class="listItem list"></ul>
-          <section>
-            <p>Suma</p>
-            <div class="sumAll">0</div>
+          <section class="sum">
+            <p class="center">Suma</p>
+            <div class="sumAll text-wrap">0</div>
           </section>
         </section>
         <section id="costs">
-          <h2>Koszty</h2>
+          <div class="title">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              fill="currentColor"
+              class="bi bi-graph-down-arrow text-danger"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M0 0h1v15h15v1H0V0Zm10 11.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-1 0v2.6l-3.613-4.417a.5.5 0 0 0-.74-.037L7.06 8.233 3.404 3.206a.5.5 0 0 0-.808.588l4 5.5a.5.5 0 0 0 .758.06l2.609-2.61L13.445 11H10.5a.5.5 0 0 0-.5.5Z"
+              />
+            </svg>
+            <h2 class="text-danger">Koszty</h2>
+          </div>
           <div class="mainConsoleCosts">
             <section class="input">
               <div class="label">
@@ -66,22 +102,30 @@
                 <input
                   type="number"
                   name="costsValue"
-                  placeholder="Kwota"
-                  class="value textAreaLeft"
+                  placeholder="Wpisz wartość"
+                  class="value textArea"
                 />
               </div>
             </section>
-            <input type="submit" class="addButton add" value="Dodaj" />
+            <input
+              type="submit"
+              class="addButton add button btn-outline-danger remove"
+              value="Dodaj"
+            />
             <ul class="list"></ul>
             <section class="sum">
-              <p>Suma</p>
-              <div class="sumAll">0</div>
+              <p class="center">Suma</p>
+              <div class="sumAll text-wrap">0</div>
             </section>
           </div>
         </section>
       </div>
     </div>
-    <button id="chcek">test</button>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
     <script src="index.js"></script>
   </body>
 </html>
