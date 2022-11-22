@@ -306,10 +306,10 @@ const editCosts = (editBtn) => {
   function createUpdateButton() {
     const updateButton = document.createElement("button");
     updateButton.innerHTML = "Zapisz";
-    updateButton.setAttribute("class", "updateButton");
+    updateButton.setAttribute("class", "updateButton btn btn-info");
     updateButton.id = "costsUpdateButton";
-    const incomeDiv = document.querySelector(".mainConsoleCosts");
-    incomeDiv.appendChild(updateButton);
+    const costsDiv = document.querySelector(".mainConsoleCosts");
+    costsDiv.appendChild(updateButton);
     updateButton.addEventListener("click", () => {
       editDatacosts(editBtn);
     });
@@ -378,7 +378,7 @@ const editIncome = (editBtn) => {
   function createUpdateButton() {
     const updateButton = document.createElement("button");
     updateButton.innerHTML = "Zapisz";
-    updateButton.setAttribute("class", "updateButton");
+    updateButton.setAttribute("class", "updateButton btn btn-info");
     updateButton.id = "incomeUpdateButton";
     const incomeDiv = document.querySelector(".mainConsoleIncome");
     incomeDiv.appendChild(updateButton);
