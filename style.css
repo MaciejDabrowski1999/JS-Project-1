@@ -1,18 +1,31 @@
-@font-face {
-  font-family: "Ubuntu Mono", monospace;
-  src: url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap");
-}
 html {
   scroll-behavior: smooth;
   font-family: "Ubuntu Mono", monospace;
 }
 body {
   background: linear-gradient(170deg, #4ab1ff, #2d5cfe);
+  height: 100vh;
+  background-repeat: no-repeat;
 }
+header {
+  text-align: center;
+  margin: 0 auto;
+  min-width: 240px;
+  max-width: 1200px;
+  width: 80%;
+  color: white;
+}
+
+#income {
+  max-width: 500px;
+}
+#costs {
+  max-width: 500px;
+}
+
 .container {
   margin: 0 auto;
   padding: 0;
-  height: 100vh;
 }
 .box {
   min-width: 240px;
@@ -27,31 +40,13 @@ body {
   justify-content: space-around;
   flex-wrap: wrap;
 }
-nav {
-  margin: 0 auto;
-  min-width: 240px;
-  max-width: 1200px;
-  text-align: center;
-  width: 80%;
-  color: white;
-}
-#income {
-  max-width: 500px;
-}
-#costs {
-  max-width: 500px;
-}
+
 .title {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-div h2 {
-  text-align: center;
-  padding: 0px 10px;
-  margin: 0px;
-}
 .input {
   display: flex;
   flex-direction: column;
@@ -64,7 +59,7 @@ div h2 {
   flex-direction: column;
   flex-wrap: wrap;
 }
-.textArea {
+.inputStyle {
   text-align: center;
   height: 30px;
   font-family: "Ubuntu Mono", monospace;
@@ -72,17 +67,17 @@ div h2 {
   border: none;
   border-radius: 5px;
 }
-.add {
+.addButton {
   width: 100%;
   margin-top: 5px;
   border-radius: 5px;
   border: none;
 }
-.add:hover {
-  background-color: #198754;
+#income .addButton:hover {
+  background-color: green;
 }
-.remove:hover {
-  background-color: #dc3545;
+#costs .addButton:hover {
+  background-color: red;
 }
 
 .elements {
@@ -131,12 +126,10 @@ div h2 {
   .label:nth-of-type(even) {
     margin-right: 0px;
     margin-left: 5px;
+    align-items: flex-end;
+    flex-wrap: wrap;
   }
   .input {
     flex-direction: row;
-  }
-  .label:nth-of-type(even) {
-    align-items: flex-end;
-    flex-wrap: wrap;
   }
 }

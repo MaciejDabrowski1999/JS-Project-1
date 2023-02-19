@@ -1,473 +1,248 @@
-const incomeUl = document.querySelector("#income .list");
-const incomeValueInput = document.querySelector("#income .value");
-const incomeNameInput = document.querySelector("#income .name");
-const incomeAddButton = document.querySelector("#income .addButton");
-const costsUl = document.querySelector("#costs .list");
-const costsValueInput = document.querySelector("#costs .value");
-const costsNameInput = document.querySelector("#costs .name");
-const costsAddButton = document.querySelector("#costs .addButton");
-const divMessage = document.querySelector("#message");
+const costsButton = document.querySelector("#costs .addButton");
+const incomeButton = document.querySelector("#income .addButton");
 
-//zmienneincome
+const costsTable = [];
+const incomeTable = [];
 let incomeID = 0;
-let incomeTable = [];
-
-//variableCosts
-
 let costsID = 0;
-let costsTable = [];
 
-// Class for Income
-class IncomeList {
-  constructor(incomeID, incomeNameInputClass, incomeValueInputClass) {
-    this.incomeID = incomeID;
-    this.incomeValueInputClass = incomeValueInputClass;
-    this.incomeNameInputClass = incomeNameInputClass;
-  }
+function incomeUnit() {
+  createUnit(true);
+  createElemets(true);
+  sumAll(true);
+  freeSavings(true);
+}
+function costsUnit() {
+  createUnit(false);
+  createElemets(false);
+  sumAll(false);
+  freeSavings(false);
 }
 
-//Class for costs
-class CostsList {
-  constructor(costsID, costsNameInputClass, costsValueInputClass) {
-    this.costsID = costsID;
-    this.costsNameInputClass = costsNameInputClass;
-    this.costsValueInputClass = costsValueInputClass;
+const createUnit = (unit) => {
+  let variant;
+  let table;
+  let inputID;
+  if (unit === true) {
+    variant = "income";
+    table = incomeTable;
+    inputID = incomeID;
+  } else {
+    variant = "costs";
+    table = costsTable;
+    inputID = costsID;
   }
+  const inputName = document.querySelector("#" + variant + " .inputName");
+  const inputValue = document.querySelector("#" + variant + " .inputValue");
+  const createTable = {
+    ID: inputID++,
+    name: inputName.value,
+    value: inputValue.value,
+  };
+  table.push(createTable);
+};
+
+function createElemets(unit) {
+  if (unit === true) {
+    variant = "income";
+    table = incomeTable;
+  } else {
+    variant = "costs";
+    table = costsTable;
+  }
+  const ulList = document.querySelector("#" + variant + " .list");
+  const list = document.createElement("li");
+  const divName = document.createElement("div");
+  const divValue = document.createElement("div");
+  const buttonEdit = document.createElement("button");
+  const buttonRemove = document.createElement("button");
+  buttonRemove.innerHTML = "Usuń";
+  buttonEdit.innerHTML = "Edytuj";
+  buttonRemove.setAttribute("class", "remove btn btn-danger");
+  list.setAttribute("class", "liItem");
+  divName.setAttribute("class", "listDiv text-wrap");
+  divValue.setAttribute("class", "listDiv text-wrap");
+  buttonEdit.setAttribute("class", "edit btn btn-primary");
+  ulList.appendChild(list);
+  list.appendChild(divName);
+  list.appendChild(divValue);
+  list.appendChild(buttonEdit);
+  list.appendChild(buttonRemove);
+
+  buttonRemove.addEventListener("click", () => {
+    deleteButton(buttonRemove);
+  });
+
+  buttonEdit.addEventListener("click", () => {
+    editButton(buttonEdit);
+  });
+
+  table.forEach((element) => {
+    list.id = element.ID;
+    divName.id = "divName" + element.ID;
+    divValue.id = "divValue" + element.ID;
+    divName.innerHTML = element.name;
+    divValue.innerHTML = element.value;
+  });
 }
 
-//sum for income
-
-const sumAll = () => {
-  const incomeDiv = document.querySelector("#income .sumAll");
-  const arrayValue = incomeTable.map((number) =>
-    parseInt(number.incomeValueInputClass)
-  );
+const sumAll = (unit) => {
+  if (unit === true) {
+    variant = "income";
+    table = incomeTable;
+  } else {
+    variant = "costs";
+    table = costsTable;
+  }
+  const sumDiv = document.querySelector("#" + variant + " .sumAll");
+  const arrayValue = table.map((number) => parseInt(number.value));
   const sum = arrayValue.reduce((acc, number) => {
     return acc + number;
   }, 0);
-  incomeDiv.innerHTML = sum;
+  sumDiv.innerHTML = sum;
 };
-
-//sum for costs
-const sumAllCosts = () => {
-  const costsDiv = document.querySelector("#costs .sumAll");
-  const arrayValue = costsTable.map((number) =>
-    parseInt(number.costsValueInputClass)
-  );
-  const sum = arrayValue.reduce((acc, number) => {
-    return acc + number;
-  }, 0);
-  costsDiv.innerHTML = sum;
-};
-
-//Income code
-function incomeCheck() {
-  //validation
-  let incomeValue = parseInt(incomeValueInput.value);
-  const wrongValueNumber = () => {
-    incomeValueInput.setAttribute("placeholder", "Za niska wartość");
-    incomeValueInput.style.backgroundColor = "red";
-    incomeValueInput.value = "";
-  };
-  const wrongValueText = () => {
-    incomeNameInput.setAttribute("placeholder", "Zła wartość");
-    incomeNameInput.style.backgroundColor = "red";
-    incomeNameInput.value = "";
-  };
-  const resetNumber = () => {
-    let time = setTimeout(() => {
-      incomeValueInput.setAttribute("placeholder", "Wpisz wartość");
-      incomeValueInput.style.backgroundColor = "white";
-    }, 2000);
-    return time;
-  };
-  const resetText = () => {
-    let time = setTimeout(() => {
-      incomeNameInput.setAttribute("placeholder", "Wpisz wartość");
-      incomeNameInput.style.backgroundColor = "white";
-    }, 2000);
-    return time;
-  };
-  if (incomeValue < 0) {
-    wrongValueNumber();
-    resetNumber();
-  } else if (incomeValue === 0) {
-    wrongValueNumber();
-    resetNumber();
-  } else if (incomeValueInput.value === "" && incomeNameInput.value === "") {
-    wrongValueNumber();
-    resetNumber();
-    wrongValueText();
-    resetText();
-  } else if (incomeNameInput.value === "") {
-    wrongValueText();
-    resetText();
-  } else if (incomeValueInput.value === "") {
-    wrongValueNumber();
-    resetNumber();
-  } else {
-    function test() {
-      console.log("test1");
-    }
-    //create new list
-    function createClass() {
-      const newincome = new IncomeList(
-        incomeID,
-        incomeNameInput.value.trim(),
-        incomeValueInput.value
-      );
-      incomeTable.push(newincome);
-      incomeID++;
-    }
-    //create elements
-    const createElement = () => {
-      const listIncome = document.createElement("li");
-      const divIncomeName = document.createElement("div");
-      const divIncomeValue = document.createElement("div");
-      const buttonIncomeEdit = document.createElement("button");
-      const buttonIncomeRemove = document.createElement("button");
-      buttonIncomeRemove.innerHTML = "Usuń";
-      buttonIncomeEdit.innerHTML = "Edytuj";
-      buttonIncomeRemove.setAttribute("class", "incomeRemove btn btn-danger");
-      listIncome.setAttribute("class", "liItem");
-      divIncomeName.setAttribute("class", "listDiv text-wrap");
-      divIncomeValue.setAttribute("class", "listDiv text-wrap");
-      buttonIncomeEdit.setAttribute("class", "incomeEdit btn btn-primary");
-      incomeUl.appendChild(listIncome);
-      listIncome.appendChild(divIncomeName);
-      listIncome.appendChild(divIncomeValue);
-      listIncome.appendChild(buttonIncomeEdit);
-      listIncome.appendChild(buttonIncomeRemove);
-
-      buttonIncomeRemove.addEventListener("click", () => {
-        deleteInocme(buttonIncomeRemove);
-      });
-
-      buttonIncomeEdit.addEventListener("click", () => {
-        editIncome(buttonIncomeEdit);
-      });
-
-      incomeTable.forEach((element) => {
-        listIncome.id = element.incomeID;
-        divIncomeName.id = "incomeDivName" + element.incomeID;
-        divIncomeValue.id = "incomeDivValue" + element.incomeID;
-        divIncomeName.innerHTML = element.incomeNameInputClass;
-        divIncomeValue.innerHTML = element.incomeValueInputClass;
-      });
-    };
-    test(), createClass(), createElement(), sumAll(), freeSavings();
-  }
-  incomeValueInput.value = "";
-  incomeNameInput.value = "";
-}
-
-// costs code
-
-function costsCheck() {
-  //validation
-  let costsValue = parseInt(costsValueInput.value);
-  let costsName = costsNameInput.value;
-  const wrongValueNumber = () => {
-    costsValueInput.setAttribute("placeholder", "Za niska wartość");
-    costsValueInput.style.backgroundColor = "red";
-    costsValueInput.value = "";
-  };
-  const wrongValueText = () => {
-    costsNameInput.setAttribute("placeholder", "Zła wartość");
-    costsNameInput.style.backgroundColor = "red";
-    costsNameInput.value = "";
-  };
-  const resetNumber = () => {
-    let time = setTimeout(() => {
-      costsValueInput.setAttribute("placeholder", "Wpisz wartość");
-      costsValueInput.style.backgroundColor = "white";
-    }, 2000);
-    return time;
-  };
-  const resetText = () => {
-    let time = setTimeout(() => {
-      costsNameInput.setAttribute("placeholder", "Wpisz wartość");
-      costsNameInput.style.backgroundColor = "white";
-    }, 2000);
-    return time;
-  };
-  if (costsValue < 0) {
-    wrongValueNumber();
-    resetNumber();
-  } else if (costsValueInput.value === 0) {
-    wrongValueNumber();
-    resetNumber();
-  } else if (costsValueInput.value === "" && costsName === "") {
-    wrongValueNumber();
-    resetNumber();
-    wrongValueText();
-    resetText();
-  } else if (costsName === "") {
-    wrongValueText();
-    resetText();
-  } else if (costsValueInput.value === "") {
-    wrongValueNumber();
-    resetNumber();
-  } else {
-    //create new list
-    function createClass() {
-      const newcosts = new CostsList(
-        costsID,
-        costsNameInput.value.trim(),
-        costsValueInput.value
-      );
-      costsTable.push(newcosts);
-      costsID++;
-    }
-    //create elements
-    const createElement = () => {
-      const listCosts = document.createElement("li");
-      const divCostsName = document.createElement("div");
-      const divCostsValue = document.createElement("div");
-      const buttonCostsEdit = document.createElement("button");
-      const buttonCostsRemove = document.createElement("button");
-      buttonCostsRemove.innerHTML = "Usuń";
-      buttonCostsEdit.innerHTML = "Edytuj";
-      buttonCostsRemove.setAttribute("class", "costsRemove btn btn-danger");
-      listCosts.setAttribute("class", "liItem");
-      divCostsName.setAttribute("class", "listDiv text-wrap");
-      divCostsValue.setAttribute("class", "listDiv text-wrap");
-      buttonCostsEdit.setAttribute("class", "costsEdit btn btn-primary");
-      costsUl.appendChild(listCosts);
-      listCosts.appendChild(divCostsName);
-      listCosts.appendChild(divCostsValue);
-      listCosts.appendChild(buttonCostsEdit);
-      listCosts.appendChild(buttonCostsRemove);
-
-      buttonCostsRemove.addEventListener("click", () => {
-        deleteCosts(buttonCostsRemove);
-      });
-
-      buttonCostsEdit.addEventListener("click", () => {
-        editCosts(buttonCostsEdit);
-      });
-
-      costsTable.forEach((element) => {
-        listCosts.id = element.costsID;
-        divCostsName.id = "costsDivName" + element.costsID;
-        divCostsValue.id = "costsDivValue" + element.costsID;
-        divCostsName.innerHTML = element.costsNameInputClass;
-        divCostsValue.innerHTML = element.costsValueInputClass;
-      });
-    };
-    createClass(), createElement(), sumAllCosts(), freeSavings();
-  }
-  costsValueInput.value = "";
-  costsNameInput.value = "";
-}
-
-//delete incomeButton
-const deleteInocme = (deleteBtn) => {
-  const chosenItem = deleteBtn.closest("li");
-  let idText = chosenItem.id;
-  let idNumber = parseInt(idText);
-  for (let i = 0; i < incomeTable.length; i++)
-    if (incomeTable[i].incomeID === idNumber) {
-      incomeTable[idNumber].incomeValueInputClass = 0;
-      break;
-    }
-
-  incomeUl.removeChild(chosenItem);
-  sumAll(), freeSavings();
-};
-
-//delete income
-
-const deleteCosts = (deleteBtn) => {
-  const chosenItem = deleteBtn.closest("li");
-  let idText = chosenItem.id;
-  let idNumber = parseInt(idText);
-  for (let i = 0; i < costsTable.length; i++)
-    if (costsTable[i].costsID === idNumber) {
-      costsTable[idNumber].costsValueInputClass = 0;
-      break;
-    }
-
-  costsUl.removeChild(chosenItem);
-  sumAllCosts(), freeSavings();
-};
-
-//costs edit button
-const editCosts = (editBtn) => {
-  const chosenItem = editBtn.closest("li");
-  let idText = chosenItem.id;
-  let idNumber = parseInt(idText);
-  console.log(idNumber);
-
-  function findID() {
-    costsNameInput.value = costsTable[idNumber].costsNameInputClass;
-    costsValueInput.value = costsTable[idNumber].costsValueInputClass;
-  }
-  function createUpdateButton() {
-    const updateButton = document.createElement("button");
-    updateButton.innerHTML = "Zapisz";
-    updateButton.setAttribute("class", "updateButton btn btn-info");
-    updateButton.id = "costsUpdateButton";
-    const costsDiv = document.querySelector(".mainConsoleCosts");
-    costsDiv.appendChild(updateButton);
-    updateButton.addEventListener("click", () => {
-      editDatacosts(editBtn);
-    });
-  }
-  function areaDisable() {
-    costsAddButton.setAttribute("disabled", "true");
-    const editButton = document.querySelectorAll(".costsEdit");
-    const removeButton = document.querySelectorAll(".costsRemove");
-    for (let i = 0; i < editButton.length; i++) {
-      editButton[i].setAttribute("disabled", "true");
-    }
-    for (let i = 0; i < removeButton.length; i++) {
-      removeButton[i].setAttribute("disabled", "true");
-    }
-  }
-  findID(), createUpdateButton(), areaDisable(), freeSavings();
-};
-
-//edit table
-
-const editDatacosts = (editBtn) => {
-  const chosenItem = editBtn.closest("li");
-  let idText = chosenItem.id;
-  let idNumber = parseInt(idText);
-  costsTable[idNumber].costsNameInputClass = costsNameInput.value;
-  costsTable[idNumber].costsValueInputClass = parseInt(costsValueInput.value);
-
-  let divUpdateName = document.querySelector("#costsDivName" + idNumber);
-  let divUpdateValue = document.querySelector("#costsDivValue" + idNumber);
-
-  divUpdateName.innerHTML = costsNameInput.value;
-  divUpdateValue.innerHTML = costsValueInput.value;
-
-  const updateButton = document.querySelector("#costsUpdateButton");
-  updateButton.remove();
-  costsNameInput.value = "";
-  costsValueInput.value = "";
-
-  function areaDisableFalse() {
-    costsAddButton.removeAttribute("disabled", "true");
-    const editButton = document.querySelectorAll(".costsEdit");
-    const removeButton = document.querySelectorAll(".costsRemove");
-    for (let i = 0; i < editButton.length; i++) {
-      editButton[i].removeAttribute("disabled", "true");
-    }
-    for (let i = 0; i < removeButton.length; i++) {
-      removeButton[i].removeAttribute("disabled", "true");
-    }
-  }
-  areaDisableFalse();
-  sumAllCosts();
-  freeSavings();
-};
-
-//income edit
-//income edit button
-const editIncome = (editBtn) => {
-  const chosenItem = editBtn.closest("li");
-  let idText = chosenItem.id;
-  let idNumber = parseInt(idText);
-
-  function findID() {
-    incomeNameInput.value = incomeTable[idNumber].incomeNameInputClass;
-    incomeValueInput.value = incomeTable[idNumber].incomeValueInputClass;
-  }
-  function createUpdateButton() {
-    const updateButton = document.createElement("button");
-    updateButton.innerHTML = "Zapisz";
-    updateButton.setAttribute("class", "updateButton btn btn-info");
-    updateButton.id = "incomeUpdateButton";
-    const incomeDiv = document.querySelector(".mainConsoleIncome");
-    incomeDiv.appendChild(updateButton);
-    updateButton.addEventListener("click", () => {
-      editDataIncome(editBtn);
-    });
-  }
-  function areaDisable() {
-    incomeAddButton.setAttribute("disabled", "true");
-    const editButton = document.querySelectorAll(".incomeEdit");
-    const removeButton = document.querySelectorAll(".incomeRemove");
-    for (let i = 0; i < editButton.length; i++) {
-      editButton[i].setAttribute("disabled", "true");
-    }
-    for (let i = 0; i < removeButton.length; i++) {
-      removeButton[i].setAttribute("disabled", "true");
-    }
-  }
-  findID(), createUpdateButton(), areaDisable(), freeSavings();
-};
-
-//edit table
-
-const editDataIncome = (editBtn) => {
-  const chosenItem = editBtn.closest("li");
-  let idText = chosenItem.id;
-  let idNumber = parseInt(idText);
-  incomeTable[idNumber].incomeNameInputClass = incomeNameInput.value;
-  incomeTable[idNumber].incomeValueInputClass = parseInt(
-    incomeValueInput.value
-  );
-
-  let divUpdateName = document.querySelector("#incomeDivName" + idNumber);
-  let divUpdateValue = document.querySelector("#incomeDivValue" + idNumber);
-
-  divUpdateName.innerHTML = incomeNameInput.value;
-  divUpdateValue.innerHTML = incomeValueInput.value;
-
-  const updateButton = document.querySelector("#incomeUpdateButton");
-  updateButton.remove();
-  incomeNameInput.value = "";
-  incomeValueInput.value = "";
-
-  function areaDisableFalse() {
-    incomeAddButton.removeAttribute("disabled", "true");
-    const editButton = document.querySelectorAll(".incomeEdit");
-    const removeButton = document.querySelectorAll(".incomeRemove");
-    for (let i = 0; i < editButton.length; i++) {
-      editButton[i].removeAttribute("disabled", "true");
-    }
-    for (let i = 0; i < removeButton.length; i++) {
-      removeButton[i].removeAttribute("disabled", "true");
-    }
-  }
-  areaDisableFalse();
-  sumAll();
-  freeSavings();
-};
-
-costsAddButton.addEventListener("click", costsCheck);
-incomeAddButton.addEventListener("click", incomeCheck);
 
 function freeSavings() {
-  const arrayIncomeValue = incomeTable.map((number) =>
-    parseInt(number.incomeValueInputClass)
-  );
+  const divMessage = document.querySelector("#message");
+  const arrayIncomeValue = incomeTable.map((number) => parseInt(number.value));
   const sumIncome = arrayIncomeValue.reduce((acc, number) => {
     return acc + number;
   }, 0);
-  const arrayCostsValue = costsTable.map((number) =>
-    parseInt(number.costsValueInputClass)
-  );
+  const arrayCostsValue = costsTable.map((number) => parseInt(number.value));
   const sumCosts = arrayCostsValue.reduce((acc, number) => {
     return acc + number;
   }, 0);
   let allSum = sumIncome - sumCosts;
   divMessage.innerHTML = allSum;
 }
-
-function chcek(testButton) {
-  let costsButton = true;
-  let typeOf;
-  if ((costsButton = testButton)) {
-    typeOf = "costs";
+function deleteButton(deleteBtn) {
+  let table;
+  const elementID = deleteBtn.parentNode.parentNode.parentNode.id;
+  if (elementID === "income") {
+    table = incomeTable;
   } else {
-    typeOf = "income";
+    table = costsTable;
   }
-  return console.log(typeOf);
+  const ulList = document.querySelector("#" + elementID + " .list");
+  const chosenItem = deleteBtn.closest("li");
+  let idText = deleteBtn.parentNode.id;
+  let idNumber = parseInt(idText);
+  for (let i = 0; i < table.length; i++)
+    if (table[i].ID === idNumber) {
+      table[idNumber].value = 0;
+      break;
+    }
+
+  ulList.removeChild(chosenItem);
+  sumAll(), freeSavings();
 }
 
-costsAddButton.addEventListener("click", chcek(true));
-incomeAddButton.addEventListener("click", chcek(false));
+const editButton = (buttonEdit) => {
+  const chosenItem = buttonEdit.closest("li");
+  const idText = chosenItem.id;
+  const idNumber = parseInt(idText);
+  const elementID = buttonEdit.parentNode.parentNode.parentNode.id;
+  const editPass = buttonEdit;
+
+  let table;
+
+  if (elementID === "income") {
+    table = incomeTable;
+  } else {
+    table = costsTable;
+  }
+  const inputName = document.querySelector("#" + elementID + " .inputName");
+  const inputValue = document.querySelector("#" + elementID + " .inputValue");
+  inputName.value = table[idNumber].name;
+  inputValue.value = table[idNumber].value;
+
+  createUpdateButton(editPass), freeSavings();
+  areaDisable(elementID);
+};
+function areaDisable(elementID) {
+  const addButton = document.querySelector("#" + elementID + " .addButton");
+  addButton.setAttribute("disabled", "true");
+  const editButton = document.querySelectorAll(".edit");
+  const removeButton = document.querySelectorAll(".remove");
+  for (let i = 0; i < editButton.length; i++) {
+    editButton[i].setAttribute("disabled", "true");
+  }
+  for (let i = 0; i < removeButton.length; i++) {
+    removeButton[i].setAttribute("disabled", "true");
+  }
+}
+
+function createUpdateButton(buttonEdit) {
+  const elementID = buttonEdit.parentNode.parentNode.parentNode.id;
+  const updateButton = document.createElement("button");
+  updateButton.innerHTML = "Zapisz";
+  updateButton.setAttribute("class", "updateButton btn btn-info");
+  updateButton.id = "updateButton";
+
+  const placeDiv = document.querySelector("#" + elementID + " .mainFunction");
+  placeDiv.appendChild(updateButton);
+  updateButton.addEventListener("click", () => {
+    editData(buttonEdit);
+  });
+}
+
+const editData = (buttonEdit) => {
+  const chosenItem = buttonEdit.closest("li");
+  let idText = chosenItem.id;
+  let idNumber = parseInt(idText);
+
+  let table;
+  const elementID = buttonEdit.parentNode.parentNode.parentNode.id;
+
+  if (elementID === "income") {
+    table = incomeTable;
+  } else {
+    table = costsTable;
+  }
+
+  const inputName = document.querySelector("#" + elementID + " .inputName");
+  const inputValue = document.querySelector("#" + elementID + " .inputValue");
+
+  let name = inputName.value;
+  let value = inputValue.value;
+  let number = parseInt(value);
+
+  table.splice(idNumber, { ID: idNumber, name: name, value: number });
+
+  let divUpdateName = document.querySelector(
+    "#" + elementID + " #divName" + idText
+  );
+  let divUpdateValue = document.querySelector(
+    "#" + elementID + " #divValue" + idText
+  );
+
+  divUpdateName.innerHTML = name;
+  divUpdateValue.innerHTML = value;
+
+  table[idNumber] = [{ ID: idNumber, name: name, value: value }];
+
+  const updateButton = document.querySelector("#updateButton");
+  updateButton.remove();
+  inputName.value = "";
+  inputValue.value = "";
+
+  areaDisableFalse(elementID);
+  sumAll();
+  freeSavings();
+};
+
+function areaDisableFalse(elementID) {
+  const addButton = document.querySelector("#" + elementID + " .addButton");
+  addButton.removeAttribute("disabled", "true");
+  const removeButton = document.querySelectorAll(".remove");
+  const editButton = document.querySelectorAll(".edit");
+  for (let i = 0; i < editButton.length; i++) {
+    editButton[i].removeAttribute("disabled", "true");
+  }
+  for (let i = 0; i < removeButton.length; i++) {
+    removeButton[i].removeAttribute("disabled", "true");
+  }
+}
+
+costsButton.addEventListener("click", costsUnit);
+incomeButton.addEventListener("click", incomeUnit);
